@@ -22,11 +22,12 @@ assert is_palindrome("12") is False
 assert is_palindrome("4") is True
 
 
-def get_longest_all_palindromes(l_init, n):
+def get_longest_all_palindromes(l_init, numar_el):
     """
     Functia determina cea mai lunga secventa de numere palindrom din lista citita
     Daca exista mai multe secvente de lungime maxima se va afisa prima secventa
     :param l_init: O lista care contine numere intregi
+    :param n: Un numar natural nenul
     :return: Se returneaza o alta lista decat cea citita, ce contine secventa ceruta,
         sau False daca nu exista secventa ceruta
     """
@@ -72,11 +73,11 @@ def main():
             shouldRun = False
         if optiune == "1":
             test_get_longest_all_palindromes()
-            n = int(input("Introducei numarul de elemente din lista: "))
+            numar_el = int(input("Introducei numarul de elemente din lista: "))
             l_init = []
-            for i in range(0, n):
+            for i in range(0, numar_el):
                 l_init.append(input("l_init[" + str(i) + "]: "))
-            print("Rezultat: ", get_longest_all_palindromes(l_init, n))
+            print("Rezultat: ", get_longest_all_palindromes(l_init, numar_el))
         if optiune == "2":
             print("N-avem inca")
 
