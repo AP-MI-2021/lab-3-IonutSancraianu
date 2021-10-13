@@ -27,7 +27,7 @@ def get_longest_all_palindromes(l_init, numar_el):
     Functia determina cea mai lunga secventa de numere palindrom din lista citita
     Daca exista mai multe secvente de lungime maxima se va afisa prima secventa
     :param l_init: O lista care contine numere intregi
-    :param n: Un numar natural nenul
+    :param numar_el: Un numar natural nenul
     :return: Se returneaza o alta lista decat cea citita, ce contine secventa ceruta,
         sau False daca nu exista secventa ceruta
     """
@@ -89,7 +89,7 @@ def get_longest_same_bit_counts(l_init, numar_el_bit) -> list[int]:
         in baza 2, din lista citita
     Daca exista mai multe secvente de lungime maxima se va afisa prima secventa
     :param l_init: O lista care contine numere intregi
-    :param n: Un numar natural nenul
+    :param numar_el_bit: Un numar natural nenul
     :return: Se returneaza o alta lista decat cea citita, ce contine secventa ceruta,
         sau None daca nu exista o astfel de secventa
     """
@@ -132,29 +132,86 @@ def test_get_longest_same_bit_counts():
     assert get_longest_same_bit_counts([0, 1, 3, 0], 4) == [1]
 
 
+def is_prime(n):
+    """
+    Functia determina daca un numar este sau nu prim
+    :param: un numar intreg
+    :return: Returneaza False daca numarul nu este prim sau True daca este prim
+    """
+    if n < 2:
+        return False
+    else:
+        for d in range(2, n//2+1):
+            if n % d == 0:
+                return False
+    return True
+
+
+def get_longest_all_not_prime(l_init) -> list[int]:
+    """
+    Functia returneaza o lista ce contine cea mai lunga subsecventa de numere neprime
+    :param: o lista cu numere intregi
+    :return: o lista cu numere intregi sau none daca nu exista aceasta subsecventa neprime
+    """
+    contmax = 0
+    cont = 0
+    for i in l_init:
+        if not is_prime(i):
+            cont += 1
+            if cont > contmax:
+                contmax = cont
+        else:
+            cont = 0
+    cont = 0
+    l_fin = []
+    for i in l_init:
+        if not is_prime(i):
+            cont += 1
+            l_fin.append(int(i))
+            if cont == contmax:
+                return l_fin
+        else:
+            cont = 0
+            l_fin.clear()
+
+
+
+def test_get_longest_all_not_prime():
+    assert get_longest_all_not_prime([0, 1, 2, 3, 4]) == [0, 1]
+    assert get_longest_all_not_prime([4, 6, 8 ,13, 10, 17]) == [4, 6, 8]
+    assert get_longest_all_not_prime([11, 12, 20, 19, 22, 32, 77]) == [22, 32, 77]
+
+
 def main():
+    test_get_longest_all_palindromes()
+    test_get_longest_same_bit_counts()
+    test_get_longest_all_not_prime()
     shouldRun = True
     while shouldRun:
-        print("Alegeti optiunea 1 sau 2 in functie de exercitiul ales"
+        print("Alegeti optiunea 1, 2 sau 3 in functie de exercitiul ales"
               " sau x daca doriti sa iesiti")
         optiune = input("Scrieti optiunea: ")
         if optiune == "x":
             shouldRun = False
-        if optiune == "1":
-            test_get_longest_all_palindromes()
+        elif optiune == "1":
             numar_el = int(input("Introducei numarul de elemente din lista: "))
             l_init = []
             for i in range(0, numar_el):
                 l_init.append(input("l_init[" + str(i) + "]: "))
             print("Rezultat: ", get_longest_all_palindromes(l_init, numar_el))
-        if optiune == "2":
-            test_get_longest_same_bit_counts()
+        elif optiune == "2":
             numar_el_bit = int(input("Introducei numarul de elemente din lista: "))
             l_init = []
             for i in range(0, numar_el_bit):
                 l_init.append(int(input("l_init[" + str(i) + "]: ")))
             print("Rezultat: ", get_longest_same_bit_counts(l_init, numar_el_bit))
-
-
+        elif optiune == "3":
+            l_init = []
+            numar_el3 = int(input("Introducei numarul de elemente din lista: "))
+            for i in range(0, numar_el3):
+                l_init.append(int(input("l_init[" + str(i) + "]: ")))
+            print("Rezultat: ", get_longest_all_not_prime(l_init))
+        else:
+            print("Optiune incorecta. Reincercati! ")
 if __name__ == '__main__':
     main()
